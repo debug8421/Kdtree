@@ -4,14 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../CVector.cpp \
 ../CKdtree.cpp \
 ../CKdtree_test.cpp 
 
 OBJS += \
+./CVector.o \
 ./CKdtree.o \
 ./CKdtree_test.o 
 
 CPP_DEPS += \
+./CVector.d \
 ./CKdtree.d \
 ./CKdtree_test.d 
 
