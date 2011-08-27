@@ -1,67 +1,80 @@
 #ifndef _CVECTOR_H_
 #define _CVECTOR_H_
 #include <math.h>
+#include <assert.h>
+#include <cstddef>
+#include <stdlib.h>
 template <typename T>
-class CVector<T>
+class CVector
 {
    protected:
-	int dim;
-	T *data;
+	size_t dim;
+	T *ptr_data;
     public:
-	CVector(int dim, T *src = NULL)
-	{
-		assert(dim > 0);
-		int size = sizeof(T)*dim;
-		data = (T*)malloc(size);
-		if(src == NULL)
-		memset(data, size, 0);
-		else
-		{
-		    memcpy(src, data, size);
-		}
-	}
+	CVector(const CVector & vec);
+	CVector(const int dim, const T *src = NULL);
 
-	CVector(T &x, T &y, T &z)
+	CVector(const T &x, const T &y, const T &z)
 	{
 		dim = 3;
-		data = (T*)malloc(sizeof(T)*dim);
-		data[0] = x;
-		data[1] = y;
-		data[2] = z;
+		ptr_data = (T*)malloc(sizeof(T)*dim);
+		ptr_data[0] = x;
+		ptr_data[1] = y;
+		ptr_data[2] = z;
 	}
-	CVector(T &x, T &y)
+	CVector(const T &x,const T &y)
 	{
 		dim = 2;
-		data[0] = x;
-		data[1] = y;
+		ptr_data[0] = x;
+		ptr_data[1] = y;
 	}
-	CVector(T &x)
+	CVector(const T &x)
 	{
 		dim = 1;
-		data[0] = x;
+		ptr_data[0] = x;
 	}
 	CVector()
 	{
 		dim = 0;
-		data = NULLL;
+		ptr_data = NULL;
 	}
-	virtual ~CVecotr()
+	virtual ~CVector()
 	{
-		delete data[];
-		data = NULL;
+		free(ptr_data);
+		ptr_data = NULL;
 		dim = 0;
 	}
+
+	CVector &operator=(const CVector &vec);
 	T norm()
 	{
 	
 	  T value = 0;
-	  for(unsight int i = 0; i < dim; i ++)
+	  for(int i = 0; i < dim; i ++)
 	  {
-	  	value += data[i]^2;
+	  	value += ptr_data[i]^2;
 	  }
 	  return sqrt(value);
 	}
-	T dist(CVector v1, CVector v2);
+	CVector operator-(const CVector &v);
+	CVector operator+(const CVector &v);
+	CVector operator/(const T &value);
+    friend	CVector operator*(const CVector &vec, const T &value);
+    T &get(const size_t index)
+	{
+		assert(index >0 && index < dim);
+		return ptr_data[index]; 
+	}
 
-}
+	T set(const size_t index,const  T &newvalue)
+	{
+		assert(index > 0 && index < dim);
+		T old = ptr_data[index];
+		ptr_data[index] = newvalue;
+		return old;
+		
+	}
+	T dist(const CVector &v1,const  CVector &v2);
+
+};
 #endif
