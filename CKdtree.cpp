@@ -16,14 +16,11 @@ CKdtree<T>::~CKdtree() {
 	// TODO Auto-generated destructor stub
 }
 template <typename T>
-void CKdtree<T>::build_kdtree(T **ptr_data, int cnt, int dim, int depth)
+void CKdtree<T>::build_kdtree(CVector<T> *ptr_exemplar_set, int cnt)
 {
-	assert(ptr_data);
+	assert(ptr_exemplar_set);
 	assert(cnt > 0);
-	assert(dim > 0);
-	assert(depth > 0);
-         	
-	
+
 
 }
 
